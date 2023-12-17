@@ -4,29 +4,33 @@ import countriesAndCapitalsDB from './database/country-and-capitals-db.json';
 import shuffleCountriesAndCapitals from "./utils/shuffleCountriesAndCapitals.js";
 
 import {useState} from "react";
+import isRightPair from "./utils/isRightPair";
 
 const countries = Object.keys(countriesAndCapitalsDB);
 const capitals = Object.values(countriesAndCapitalsDB);
-const shuffledCountriesAndCapitals = shuffleCountriesAndCapitals([...countries, ...capitals]);
+let shuffledCountriesAndCapitals = shuffleCountriesAndCapitals([...countries, ...capitals]);
 
 function App() {
     const [firstSelection, setFirstSelection] = useState();
     const [secondSelection, setSecondSelection] = useState();
 
     function handleClick(index) {
-        const isHasFirstSelection = firstSelection === undefined;
-        const isHasSecondSelection = secondSelection === undefined;
-        const isHasBothSelected = !isHasFirstSelection && !isHasSecondSelection;
+        const isFirstSelected = firstSelection === undefined;
+        const isSecondSelected = secondSelection === undefined;
+        const isBothSelected = isFirstSelected && isSecondSelected;
 
-        if (isHasBothSelected) {
+        if (!isBothSelected) {
+            setFirstSelection(shuffledCountriesAndCapitals[index]);
             setSecondSelection(undefined);
-            setFirstSelection(undefined);
         }
 
-        if (!isHasFirstSelection) {
-            setSecondSelection(shuffledCountriesAndCapitals[index]);
-        } else {
-            setFirstSelection(shuffledCountriesAndCapitals[index]);
+        if (isFirstSelected) {
+            return setFirstSelection(shuffledCountriesAndCapitals[index]);
+        }
+
+        if (isSecondSelected) {
+            shuffledCountriesAndCapitals = [...isRightPair(firstSelection, shuffledCountriesAndCapitals[index], shuffledCountriesAndCapitals)];
+            return setSecondSelection(shuffledCountriesAndCapitals[index]);
         }
     }
 
