@@ -1,7 +1,7 @@
-import getTheAnswerOfTheSelectedPair from "./getTheAnswerOfTheSelectedPair.js";
+import isCorrectSelectionOfPair from "./isCorrectSelectionOfPair.js";
 
 function deleteCorrectlySelectedPair(firstSelection, selected, prev) {
-    if (getTheAnswerOfTheSelectedPair(firstSelection, selected)) {
+    if (isCorrectSelectionOfPair(firstSelection, selected)) {
         return prev.filter(countryOrCapital => countryOrCapital !== firstSelection && countryOrCapital !== selected);
     }
 

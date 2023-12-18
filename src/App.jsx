@@ -3,7 +3,7 @@ import './App.css';
 import countriesAndCapitalsDB from './database/country-and-capitals-db.json';
 
 import shuffleArrayElements from "./utils/shuffleCountriesAndCapitals.js";
-import getTheAnswerOfTheSelectedPair from "./utils/getTheAnswerOfTheSelectedPair.js";
+import isCorrectSelectionOfPair from "./utils/isCorrectSelectionOfPair.js";
 import deleteCorrectlySelectedPair from "./utils/deleteCorrectlySelectedPair.js";
 
 import {useState} from "react";
@@ -38,7 +38,7 @@ function App() {
             const [firstIndex] = selectedCountryOrCapital;
             const [firstItem, secondItem] = [shuffledCountriesAndCapitals[firstIndex], shuffledCountriesAndCapitals[index]];
 
-            if (getTheAnswerOfTheSelectedPair(firstItem, secondItem)) {
+            if (isCorrectSelectionOfPair(firstItem, secondItem)) {
                 const updatedList = shuffledCountriesAndCapitals.filter((_, i) => i !== firstIndex && i !== index);
                 setShuffledCountriesAndCapitals(updatedList);
                 setSelectedCountryOrCapital([]);
