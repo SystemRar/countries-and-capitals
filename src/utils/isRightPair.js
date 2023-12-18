@@ -3,7 +3,7 @@ import countriesAndCapitalsDB from '../database/country-and-capitals-db';
 const countries = Object.keys(countriesAndCapitalsDB);
 const capitals = Object.values(countriesAndCapitalsDB);
 
-function isRightPair(firstSelection, secondSelection, shuffledCountriesAndCapitals) {
+function deleteCorrectlySelectedPair(firstSelection, secondSelection, shuffledCountriesAndCapitals) {
     const correctCountry = countries.filter(country => country === firstSelection).length === 0 ? secondSelection : firstSelection;
     const correctCapital = capitals.filter(capital => capital === firstSelection).length === 0 ? secondSelection : firstSelection;
     const isCorrect = countriesAndCapitalsDB[correctCountry] === correctCapital;
@@ -15,4 +15,4 @@ function isRightPair(firstSelection, secondSelection, shuffledCountriesAndCapita
     return shuffledCountriesAndCapitals;
 }
 
-export default isRightPair;
+export default deleteCorrectlySelectedPair;

@@ -1,18 +1,20 @@
 import './App.css';
 
 import countriesAndCapitalsDB from './database/country-and-capitals-db.json';
-import shuffleCountriesAndCapitals from "./utils/shuffleCountriesAndCapitals.js";
+import shuffleArrayElements from "./utils/shuffleCountriesAndCapitals.js";
 
 import {useState} from "react";
-import isRightPair from "./utils/isRightPair";
+import deleteCorrectlySelectedPair from "./utils/isRightPair";
 
 const countries = Object.keys(countriesAndCapitalsDB);
 const capitals = Object.values(countriesAndCapitalsDB);
-let shuffledCountriesAndCapitals = shuffleCountriesAndCapitals([...countries, ...capitals]);
+let shuffledCountriesAndCapitals = shuffleArrayElements([...countries, ...capitals]);
+
 
 function App() {
     const [firstSelection, setFirstSelection] = useState();
     const [secondSelection, setSecondSelection] = useState();
+
 
     function handleClick(index) {
         const isFirstSelected = firstSelection === undefined;
@@ -29,7 +31,7 @@ function App() {
         }
 
         if (isSecondSelected) {
-            shuffledCountriesAndCapitals = [...isRightPair(firstSelection, shuffledCountriesAndCapitals[index], shuffledCountriesAndCapitals)];
+            shuffledCountriesAndCapitals = [...deleteCorrectlySelectedPair(firstSelection, shuffledCountriesAndCapitals[index], shuffledCountriesAndCapitals)];
             return setSecondSelection(shuffledCountriesAndCapitals[index]);
         }
     }

@@ -1,5 +1,5 @@
-function shuffleCountriesAndCapitals(array) {
-    return array.sort(() => Math.random() - 0.5);
+function shuffleArrayElements(array) {
+    return array.toSorted(() => Math.random() - 0.5);
 }
 
-export default shuffleCountriesAndCapitals;
+export default shuffleArrayElements;
