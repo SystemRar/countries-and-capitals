@@ -70,13 +70,13 @@ function App() {
     return (
         <div className={'game-wrapper'}>
             {shuffledCountriesAndCapitals.map((item, index) => {
-                const wrongSelection = wrongSelections.includes(index) ? 'country-or-capital--incorrectly-selected' : 'country-or-capital--selected'
+                const selectedClass = wrongSelections.includes(index) ? 'country-or-capital--incorrectly-selected' : 'country-or-capital--selected'
 
                 return (
                     <div
                         key={index}
                         onClick={() => handleClick(index)}
-                        className={`country-or-capital ${selectedCountryOrCapital.includes(index) ? wrongSelection : ''}`}
+                        className={`country-or-capital ${selectedCountryOrCapital.includes(index) ? selectedClass : ''}`}
                     >
                         {item}
                     </div>
