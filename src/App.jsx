@@ -69,22 +69,19 @@ function App() {
 
     return (
         <div className={'game-wrapper'}>
-            {shuffledCountriesAndCapitals.map((item, index) => (
-                <div
-                    key={index}
-                    onClick={() => handleClick(index)}
-                    className={'country-or-capital'}
-                    style={{
-                        backgroundColor: selectedCountryOrCapital.includes(index)
-                            ? wrongSelections.includes(index)
-                                ? '#b04040'
-                                : '#9d9c3b'
-                            : 'inherit',
-                    }}
-                >
-                    {item}
-                </div>
-            ))}
+            {shuffledCountriesAndCapitals.map((item, index) => {
+                const wrongSelection = wrongSelections.includes(index) ? 'country-or-capital--incorrectly-selected' : 'country-or-capital--selected'
+
+                return (
+                    <div
+                        key={index}
+                        onClick={() => handleClick(index)}
+                        className={`country-or-capital ${selectedCountryOrCapital.includes(index) ? wrongSelection : ''}`}
+                    >
+                        {item}
+                    </div>
+                )
+            })}
         </div>
     )
 }

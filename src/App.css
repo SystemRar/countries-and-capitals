@@ -25,3 +25,19 @@
 .country-or-capital:hover {
     background-color: #3f3f3f;
 }
+
+.country-or-capital--selected {
+    background-color: #939200;
+}
+
+.country-or-capital--selected:hover {
+    background-color: #777700;
+}
+
+.country-or-capital--incorrectly-selected {
+    background-color: #a40000;
+}
+
+.country-or-capital--incorrectly-selected:hover {
+    background-color: #860000;
+}
