@@ -69,6 +69,7 @@ function App() {
 
     return (
         <div className={'game-wrapper'}>
+            <p>{shuffledCountriesAndCapitals.length === 0 ? 'You won!' : ''}</p>
             {shuffledCountriesAndCapitals.map((item, index) => {
                 const selectedClass = wrongSelections.includes(index) ? 'country-or-capital--incorrectly-selected' : 'country-or-capital--selected'
 
