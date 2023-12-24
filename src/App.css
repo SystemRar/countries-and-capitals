@@ -41,3 +41,7 @@
 .country-or-capital--incorrectly-selected:hover {
     background-color: #860000;
 }
+
+.end-game {
+    flex-direction: column;
+}

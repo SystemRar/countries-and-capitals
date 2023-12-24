@@ -79,10 +79,21 @@ function App() {
         }
     }
 
+    function handleReloadPage() {
+        window.location.reload();
+    }
+
+    if (shuffledCountriesAndCapitals.length === 0) {
+        return (
+            <div className={'game-wrapper end-game'}>
+                <h1>You won!</h1>
+                <button onClick={handleReloadPage}>Start again</button>
+            </div>
+        )
+    }
 
     return (
         <div className={'game-wrapper'}>
-            <p>{shuffledCountriesAndCapitals.length === 0 ? 'You won!' : ''}</p>
             {shuffledCountriesAndCapitals.map((item, index) => {
                 const selectedClass = wrongSelections.includes(index) ? 'country-or-capital--incorrectly-selected' : 'country-or-capital--selected'
 
