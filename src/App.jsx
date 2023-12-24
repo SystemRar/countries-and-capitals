@@ -38,9 +38,20 @@ function App() {
             const [firstIndex] = selectedCountryOrCapital;
             const [firstItem, secondItem] = [shuffledCountriesAndCapitals[firstIndex], shuffledCountriesAndCapitals[index]];
 
+            if (firstIndex === index) {
+                setSelectedCountryOrCapital([]);
+                setWrongSelections([]);
+                return;
+            }
+
+
             if (isCorrectSelectionOfPair(firstItem, secondItem)) {
-                const updatedList = shuffledCountriesAndCapitals.filter((_, i) => i !== firstIndex && i !== index);
-                setShuffledCountriesAndCapitals(updatedList);
+                const updatedListOfCountriesAndCapitals = shuffledCountriesAndCapitals.filter((_, indexOfCountyOrCapital) => {
+                    const remainingCountriesAndCapitals = indexOfCountyOrCapital !== firstIndex && indexOfCountyOrCapital !== index;
+                    return remainingCountriesAndCapitals;
+                });
+
+                setShuffledCountriesAndCapitals(updatedListOfCountriesAndCapitals);
                 setSelectedCountryOrCapital([]);
                 setWrongSelections([]);
             } else {
@@ -63,6 +74,8 @@ function App() {
         if (isBothSelected) {
             setFirstSelection(selected);
             setSecondSelection(undefined);
+            setWrongSelections([]);
+            setSelectedCountryOrCapital([index]);
         }
     }
 
