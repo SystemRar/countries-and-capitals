@@ -1,114 +1,80 @@
 import './App.css';
 
+import { useState } from 'react';
+
 import countriesAndCapitalsDB from './database/country-and-capitals-db.json';
-
-import shuffleArrayElements from "./utils/shuffleCountriesAndCapitals.js";
-import isCorrectSelectionOfPair from "./utils/isCorrectSelectionOfPair.js";
-import deleteCorrectlySelectedPair from "./utils/deleteCorrectlySelectedPair.js";
-
-import {useState} from "react";
+import deleteCorrectlySelectedPair from './utils/deleteCorrectlySelectedPair.js';
+import shuffleArrayElements from './utils/shuffleCountriesAndCapitals.js';
 
 const countries = Object.keys(countriesAndCapitalsDB);
 const capitals = Object.values(countriesAndCapitalsDB);
 
 function App() {
-    const [firstSelection, setFirstSelection] = useState();
-    const [secondSelection, setSecondSelection] = useState();
-    const [shuffledCountriesAndCapitals, setShuffledCountriesAndCapitals] = useState(() => shuffleArrayElements([...countries, ...capitals]))
-    const [selectedCountryOrCapital, setSelectedCountryOrCapital] = useState([]);
-    const [wrongSelections, setWrongSelections] = useState([]);
+  const [firstSelection, setFirstSelection] = useState(undefined);
+  const [secondSelection, setSecondSelection] = useState(undefined);
+  const [shuffledCountriesAndCapitals, setShuffledCountriesAndCapitals] = useState(() => shuffleArrayElements([...countries, ...capitals]));
+  const [isWrongSelected, setIsWrongSelected] = useState(false);
 
-    function handleClick(index) {
-        const isFirstSelected = firstSelection !== undefined;
-        const isSecondSelected = secondSelection !== undefined;
-        const isBothSelected = isFirstSelected && isSecondSelected;
+  function handleClick(index) {
+    const isFirstSelected = firstSelection !== undefined;
+    const isSecondSelected = secondSelection !== undefined;
+    const isBothSelected = isFirstSelected && isSecondSelected;
 
-        const selected = shuffledCountriesAndCapitals[index];
+    const selected = shuffledCountriesAndCapitals[index];
 
-        const isSelected = selectedCountryOrCapital.includes(index);
-        if (isSelected) {
-            setSelectedCountryOrCapital(selectedCountryOrCapital.filter(countryOrCapital => countryOrCapital !== index));
-        }
-
-        if (selectedCountryOrCapital.length < 2) {
-            setSelectedCountryOrCapital([...selectedCountryOrCapital, index]);
-        }
-
-        if (selectedCountryOrCapital.length === 1) {
-            const [firstIndex] = selectedCountryOrCapital;
-            const [firstItem, secondItem] = [shuffledCountriesAndCapitals[firstIndex], shuffledCountriesAndCapitals[index]];
-
-            if (firstIndex === index) {
-                setSelectedCountryOrCapital([]);
-                setWrongSelections([]);
-                return;
-            }
-
-
-            if (isCorrectSelectionOfPair(firstItem, secondItem)) {
-                const updatedListOfCountriesAndCapitals = shuffledCountriesAndCapitals.filter((_, indexOfCountyOrCapital) => {
-                    const remainingCountriesAndCapitals = indexOfCountyOrCapital !== firstIndex && indexOfCountyOrCapital !== index;
-                    return remainingCountriesAndCapitals;
-                });
-
-                setShuffledCountriesAndCapitals(updatedListOfCountriesAndCapitals);
-                setSelectedCountryOrCapital([]);
-                setWrongSelections([]);
-            } else {
-                setWrongSelections([firstIndex, index]);
-            }
-        }
-
-        if (!isFirstSelected) {
-            setFirstSelection(selected);
-            return;
-        }
-
-        if (isFirstSelected && !isSecondSelected) {
-            setSecondSelection(selected);
-
-            setShuffledCountriesAndCapitals(prev => deleteCorrectlySelectedPair(firstSelection, selected, prev));
-            return;
-        }
-
-        if (isBothSelected) {
-            setFirstSelection(selected);
-            setSecondSelection(undefined);
-            setWrongSelections([]);
-            setSelectedCountryOrCapital([index]);
-        }
+    if (!isFirstSelected) {
+      setFirstSelection(selected);
+      return;
     }
 
-    function handleReloadPage() {
-        window.location.reload();
+    if (isFirstSelected && !isSecondSelected) {
+      if (selected === firstSelection) {
+        return;
+      }
+
+      setSecondSelection(selected);
+      setIsWrongSelected(!isWrongSelected);
+
+      setShuffledCountriesAndCapitals((prev) => deleteCorrectlySelectedPair(firstSelection, selected, prev));
+      return;
     }
 
-    if (shuffledCountriesAndCapitals.length === 0) {
-        return (
-            <div className={'game-wrapper end-game'}>
-                <h1>You won!</h1>
-                <button onClick={handleReloadPage}>Start again</button>
-            </div>
-        )
+    if (isBothSelected) {
+      setFirstSelection(selected);
+      setSecondSelection(undefined);
+      setIsWrongSelected(!isWrongSelected);
     }
+  }
 
+  console.log(isWrongSelected);
+
+  function handleReloadPage() {
+    window.location.reload();
+  }
+
+  const isEndGame = shuffledCountriesAndCapitals.length === 0;
+  if (isEndGame) {
     return (
-        <div className={'game-wrapper'}>
-            {shuffledCountriesAndCapitals.map((item, index) => {
-                const selectedClass = wrongSelections.includes(index) ? 'country-or-capital--incorrectly-selected' : 'country-or-capital--selected'
+      <div className="game-wrapper end-game">
+        <h1>You won!</h1>
+        <button onClick={handleReloadPage}>Start again</button>
+      </div>
+    );
+  }
 
-                return (
-                    <div
-                        key={index}
-                        onClick={() => handleClick(index)}
-                        className={`country-or-capital ${selectedCountryOrCapital.includes(index) ? selectedClass : ''}`}
-                    >
-                        {item}
-                    </div>
-                )
-            })}
+  return (
+    <div className="game-wrapper">
+      {shuffledCountriesAndCapitals.map((item, index) => (
+        <div
+          key={index}
+          onClick={() => handleClick(index)}
+          className="country-or-capital"
+        >
+          {item}
         </div>
-    )
+      ))}
+    </div>
+  );
 }
 
-export default App
+export default App;
