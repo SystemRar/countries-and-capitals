@@ -29,6 +29,7 @@ function App() {
 
     if (isFirstSelected && !isSecondSelected) {
       if (selected === firstSelection) {
+        setFirstSelection(undefined);
         return;
       }
 
@@ -46,8 +47,6 @@ function App() {
     }
   }
 
-  console.log(isWrongSelected);
-
   function handleReloadPage() {
     window.location.reload();
   }
@@ -64,15 +63,21 @@ function App() {
 
   return (
     <div className="game-wrapper">
-      {shuffledCountriesAndCapitals.map((item, index) => (
-        <div
-          key={index}
-          onClick={() => handleClick(index)}
-          className="country-or-capital"
-        >
-          {item}
-        </div>
-      ))}
+      {shuffledCountriesAndCapitals.map((countryOrCapital, index) => {
+        const isFirstSelected = shuffledCountriesAndCapitals.indexOf(firstSelection) === index;
+        const isSecondSelected = shuffledCountriesAndCapitals.indexOf(secondSelection) === index;
+
+        const isWrong = (isFirstSelected || isSecondSelected) && isWrongSelected;
+        return (
+          <div
+            key={index}
+            onClick={() => handleClick(index)}
+            className={`country-or-capital ${isFirstSelected ? 'country-or-capital--selected' : ''} ${isWrong ? 'country-or-capital--incorrectly-selected' : ''}`}
+          >
+            {countryOrCapital}
+          </div>
+        );
+      })}
     </div>
   );
 }
