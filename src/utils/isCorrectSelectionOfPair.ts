@@ -1,6 +1,6 @@
-import countriesAndCapitalsDB from '../database/country-and-capitals-db.json';
+import countriesAndCapitalsDB from '../database/country-and-capitals-db';
 
-function isCorrectSelectionOfPair(firstSelection, selected) {
+function isCorrectSelectionOfPair(firstSelection: string, selected: string): boolean {
     return countriesAndCapitalsDB[firstSelection] === selected || countriesAndCapitalsDB[selected] === firstSelection;
 }
 

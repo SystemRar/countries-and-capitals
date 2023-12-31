@@ -1,4 +1,8 @@
-{
+interface CountryAndCapitalsDb {
+  [country: string]: string;
+}
+
+const data: CountryAndCapitalsDb = {
   "Moldova": "Chisinau",
   "Ukraine": "Kiev",
   "Russia": "Moscow",
@@ -10,3 +14,5 @@
   "Mexico": "Mexico City",
   "Canada": "Ottawa"
 }
+
+export default data

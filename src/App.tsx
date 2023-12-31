@@ -2,20 +2,20 @@ import './App.css';
 
 import { useState } from 'react';
 
-import countriesAndCapitalsDB from './database/country-and-capitals-db.json';
-import deleteCorrectlySelectedPair from './utils/deleteCorrectlySelectedPair.js';
-import shuffleArrayElements from './utils/shuffleCountriesAndCapitals.js';
+import countriesAndCapitalsDB from './database/country-and-capitals-db.ts';
+import deleteCorrectlySelectedPair from './utils/deleteCorrectlySelectedPair.ts';
+import shuffleArrayElements from './utils/shuffleCountriesAndCapitals.ts';
 
 const countries = Object.keys(countriesAndCapitalsDB);
 const capitals = Object.values(countriesAndCapitalsDB);
 
 function App() {
-  const [firstSelection, setFirstSelection] = useState(undefined);
-  const [secondSelection, setSecondSelection] = useState(undefined);
-  const [shuffledCountriesAndCapitals, setShuffledCountriesAndCapitals] = useState(() => shuffleArrayElements([...countries, ...capitals]));
-  const [isWrongSelected, setIsWrongSelected] = useState(false);
+  const [firstSelection, setFirstSelection] = useState<string | undefined>(undefined);
+  const [secondSelection, setSecondSelection] = useState<string | undefined>(undefined);
+  const [shuffledCountriesAndCapitals, setShuffledCountriesAndCapitals] = useState<string[]>(() => shuffleArrayElements([...countries, ...capitals]));
+  const [isWrongSelected, setIsWrongSelected] = useState<boolean>(false);
 
-  function handleClick(index) {
+  function handleClick(index: number) {
     const isFirstSelected = firstSelection !== undefined;
     const isSecondSelected = secondSelection !== undefined;
     const isBothSelected = isFirstSelected && isSecondSelected;
@@ -48,7 +48,10 @@ function App() {
   }
 
   function handleReloadPage() {
-    window.location.reload();
+    setFirstSelection(undefined);
+    setSecondSelection(undefined)
+    setIsWrongSelected(false);
+    setShuffledCountriesAndCapitals(shuffleArrayElements([...countries, ...capitals]));
   }
 
   const isEndGame = shuffledCountriesAndCapitals.length === 0;
@@ -64,8 +67,8 @@ function App() {
   return (
     <div className="game-wrapper">
       {shuffledCountriesAndCapitals.map((countryOrCapital, index) => {
-        const isFirstSelected = shuffledCountriesAndCapitals.indexOf(firstSelection) === index;
-        const isSecondSelected = shuffledCountriesAndCapitals.indexOf(secondSelection) === index;
+        const isFirstSelected = shuffledCountriesAndCapitals.indexOf(firstSelection as string) === index;
+        const isSecondSelected = shuffledCountriesAndCapitals.indexOf(secondSelection as string) === index;
 
         const isWrong = (isFirstSelected || isSecondSelected) && isWrongSelected;
         return (
