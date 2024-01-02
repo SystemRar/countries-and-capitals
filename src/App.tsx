@@ -2,9 +2,9 @@ import './App.css';
 
 import { useState } from 'react';
 
-import countriesAndCapitalsDB from './database/country-and-capitals-db.ts';
-import deleteCorrectlySelectedPair from './utils/deleteCorrectlySelectedPair.ts';
-import shuffleArrayElements from './utils/shuffleCountriesAndCapitals.ts';
+import countriesAndCapitalsDB from './database/country-and-capitals-db';
+import deleteCorrectlySelectedPair from './utils/deleteCorrectlySelectedPair';
+import shuffleArrayElements from './utils/shuffleCountriesAndCapitals';
 
 const countries = Object.keys(countriesAndCapitalsDB);
 const capitals = Object.values(countriesAndCapitalsDB);
@@ -12,8 +12,8 @@ const capitals = Object.values(countriesAndCapitalsDB);
 function App() {
   const [firstSelection, setFirstSelection] = useState<string | undefined>(undefined);
   const [secondSelection, setSecondSelection] = useState<string | undefined>(undefined);
-  const [shuffledCountriesAndCapitals, setShuffledCountriesAndCapitals] = useState<string[]>(() => shuffleArrayElements([...countries, ...capitals]));
-  const [isWrongSelected, setIsWrongSelected] = useState<boolean>(false);
+  const [shuffledCountriesAndCapitals, setShuffledCountriesAndCapitals] = useState(() => shuffleArrayElements([...countries, ...capitals]));
+  const [isWrongSelected, setIsWrongSelected] = useState(false);
 
   function handleClick(index: number) {
     const isFirstSelected = firstSelection !== undefined;
@@ -49,7 +49,7 @@ function App() {
 
   function handleReloadPage() {
     setFirstSelection(undefined);
-    setSecondSelection(undefined)
+    setSecondSelection(undefined);
     setIsWrongSelected(false);
     setShuffledCountriesAndCapitals(shuffleArrayElements([...countries, ...capitals]));
   }
@@ -67,8 +67,8 @@ function App() {
   return (
     <div className="game-wrapper">
       {shuffledCountriesAndCapitals.map((countryOrCapital, index) => {
-        const isFirstSelected = shuffledCountriesAndCapitals.indexOf(firstSelection as string) === index;
-        const isSecondSelected = shuffledCountriesAndCapitals.indexOf(secondSelection as string) === index;
+        const isFirstSelected = shuffledCountriesAndCapitals.indexOf(firstSelection) === index;
+        const isSecondSelected = shuffledCountriesAndCapitals.indexOf(secondSelection) === index;
 
         const isWrong = (isFirstSelected || isSecondSelected) && isWrongSelected;
         return (

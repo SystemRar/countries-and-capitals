@@ -1,8 +1,4 @@
-interface CountryAndCapitalsDb {
-  [country: string]: string;
-}
-
-const data: CountryAndCapitalsDb = {
+const data: Record<string, string> = {
   "Moldova": "Chisinau",
   "Ukraine": "Kiev",
   "Russia": "Moscow",

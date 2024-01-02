@@ -1,11 +1,11 @@
-import isCorrectSelectionOfPair from "./isCorrectSelectionOfPair.ts";
+import isCorrectSelectionOfPair from './isCorrectSelectionOfPair';
 
 function deleteCorrectlySelectedPair(firstSelection: string, selected: string, prev: Array<string>) {
-    if (isCorrectSelectionOfPair(firstSelection, selected)) {
-        return prev.filter(countryOrCapital => countryOrCapital !== firstSelection && countryOrCapital !== selected);
-    }
+  if (isCorrectSelectionOfPair(firstSelection, selected)) {
+    return prev.filter((countryOrCapital) => countryOrCapital !== firstSelection && countryOrCapital !== selected);
+  }
 
-    return prev;
+  return prev;
 }
 
 export default deleteCorrectlySelectedPair;
