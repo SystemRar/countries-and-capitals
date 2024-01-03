@@ -1,4 +1,4 @@
-.game-wrapper {
+.game_wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
@@ -13,7 +13,7 @@
     user-select: none;
 }
 
-.country-or-capital {
+.country_or_capital {
     cursor: pointer;
 
     padding: 3px 5px;
@@ -22,26 +22,26 @@
     transition: background-color 0.2s ease-in-out;
 }
 
-.country-or-capital:hover {
+.country_or_capital:hover {
     background-color: #3f3f3f;
 }
 
-.country-or-capital--selected {
+.country_or_capital__selected {
     background-color: #939200;
 }
 
-.country-or-capital--selected:hover {
+.country_or_capital__selected:hover {
     background-color: #777700;
 }
 
-.country-or-capital--incorrectly-selected {
+.country_or_capital__incorrectly_selected {
     background-color: #a40000;
 }
 
-.country-or-capital--incorrectly-selected:hover {
+.country_or_capital__incorrectly_selected:hover {
     background-color: #860000;
 }
 
-.end-game {
+.end_game {
     flex-direction: column;
 }

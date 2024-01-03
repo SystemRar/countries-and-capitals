@@ -1,6 +1,11 @@
-import './App.css';
-
 import { useState } from 'react';
+import {
+  country_or_capital,
+  country_or_capital__incorrectly_selected,
+  country_or_capital__selected,
+  end_game,
+  game_wrapper,
+} from './App.module.css';
 
 import countriesAndCapitalsDB from './database/country-and-capitals-db';
 import deleteCorrectlySelectedPair from './utils/deleteCorrectlySelectedPair';
@@ -57,7 +62,7 @@ function App() {
   const isEndGame = shuffledCountriesAndCapitals.length === 0;
   if (isEndGame) {
     return (
-      <div className="game-wrapper end-game">
+      <div className={`${game_wrapper} ${end_game}`}>
         <h1>You won!</h1>
         <button onClick={handleReloadPage}>Start again</button>
       </div>
@@ -65,7 +70,7 @@ function App() {
   }
 
   return (
-    <div className="game-wrapper">
+    <div className={game_wrapper}>
       {shuffledCountriesAndCapitals.map((countryOrCapital, index) => {
         const isFirstSelected = firstSelection === countryOrCapital;
         const isSecondSelected = secondSelection === countryOrCapital;
@@ -75,7 +80,7 @@ function App() {
           <div
             key={countryOrCapital}
             onClick={() => handleClick(index)}
-            className={`country-or-capital ${isFirstSelected ? 'country-or-capital--selected' : ''} ${isWrong ? 'country-or-capital--incorrectly-selected' : ''}`}
+            className={`${country_or_capital} ${isFirstSelected ? `${country_or_capital__selected}` : ''} ${isWrong ? `${country_or_capital__incorrectly_selected}` : ''}`}
           >
             {countryOrCapital}
           </div>
