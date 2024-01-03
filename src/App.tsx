@@ -67,13 +67,13 @@ function App() {
   return (
     <div className="game-wrapper">
       {shuffledCountriesAndCapitals.map((countryOrCapital, index) => {
-        const isFirstSelected = shuffledCountriesAndCapitals.indexOf(firstSelection as string) === index;
-        const isSecondSelected = shuffledCountriesAndCapitals.indexOf(secondSelection as string) === index;
+        const isFirstSelected = firstSelection === countryOrCapital;
+        const isSecondSelected = secondSelection === countryOrCapital;
 
         const isWrong = (isFirstSelected || isSecondSelected) && isWrongSelected;
         return (
           <div
-            key={index}
+            key={countryOrCapital}
             onClick={() => handleClick(index)}
             className={`country-or-capital ${isFirstSelected ? 'country-or-capital--selected' : ''} ${isWrong ? 'country-or-capital--incorrectly-selected' : ''}`}
           >
